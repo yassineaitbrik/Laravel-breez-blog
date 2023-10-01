@@ -34,17 +34,15 @@
                                 <x-dropdown-link :href="route('blogs.edit', $blog)">
                                     {{ __('Edit') }}
                                 </x-dropdown-link>
-                                <!-- <form method="POST" action="{{ route('blogs.destroy', $blog) }}">
-                                            @csrf
-                                            @method('delete')
-                                            <x-dropdown-link :href="route('blogs.destroy', $blog)" onclick="event.preventDefault(); this.closest('form').submit();">
-                                                {{ __('Delete') }}
-                                            </x-dropdown-link>
-                                        </form> -->
+                                <form method="POST" action="{{ route('blogs.destroy', $blog) }}">
+                                    @csrf
+                                    @method('delete')
+                                    <x-dropdown-link :href="route('blogs.destroy', $blog)" onclick="event.preventDefault(); this.closest('form').submit();">
+                                        {{ __('Delete') }}
+                                    </x-dropdown-link>
+                                </form>
 
-                                <x-dropdown-link x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')">
-                                    {{ __('Delete') }}
-                                </x-dropdown-link>
+
                             </x-slot>
                         </x-dropdown>
                         @endif
@@ -57,35 +55,3 @@
         </div>
     </div>
 </x-app-layout>
-<x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
-    <form method="POST" action="{{ route('blogs.destroy', $blog) }}" class="p-6">
-        @csrf
-        @method('delete')
-        <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Are you sure you want to delete your message?') }}
-        </h2>
-        <p x-text="myValue"></p>
-
-        <p class="mt-1 text-sm text-gray-600">
-            {{ __('one is deleted you can\'t see it anymore!') }}
-        </p>
-
-        <div class="mt-6">
-            <x-input-label for="password" value="{{ __('Password') }}" class="sr-only" />
-
-            <x-text-input id="password" name="password" type="password" class="mt-1 block w-3/4" placeholder="{{ __('Password') }}" />
-
-            <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
-        </div>
-
-        <div class="mt-6 flex justify-end">
-            <x-secondary-button x-on:click="$dispatch('close')">
-                {{ __('Cancel') }}
-            </x-secondary-button>
-
-            <x-danger-button class="ml-3">
-                {{ __('Delete message') }}
-            </x-danger-button>
-        </div>
-    </form>
-</x-modal>

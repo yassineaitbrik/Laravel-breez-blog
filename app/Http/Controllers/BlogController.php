@@ -80,9 +80,6 @@ class BlogController extends Controller
      */
     public function destroy(Blog $blog,Request $request):RedirectResponse
     {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
         $auth=$this->authorize('delete',$blog);
         $blog->delete();
         return redirect(route('blogs.index'));
