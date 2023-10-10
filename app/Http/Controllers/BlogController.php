@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\User;
+use App\Notifications\NewBlog;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,7 +40,6 @@ class BlogController extends Controller
         ]);
 
         $request->user()->blogs()->create($validated);
-
         return redirect(route('blogs.index'));
     }
 
@@ -62,12 +63,12 @@ class BlogController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Blog $blog):RedirectResponse
+    public function update(Request $request, Blog $blog): RedirectResponse
     {
 
-        $this->authorize('update',$blog);
+        $this->authorize('update', $blog);
         $validated = $request->validate([
-            'message'=> 'required|string|max:255',
+            'message' => 'required|string|max:255',
         ]);
 
         $blog->update($validated);
@@ -78,9 +79,9 @@ class BlogController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Blog $blog,Request $request):RedirectResponse
+    public function destroy(Blog $blog, Request $request): RedirectResponse
     {
-        $auth=$this->authorize('delete',$blog);
+        $auth = $this->authorize('delete', $blog);
         $blog->delete();
         return redirect(route('blogs.index'));
     }
